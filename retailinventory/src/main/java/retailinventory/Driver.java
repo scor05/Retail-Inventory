@@ -45,31 +45,29 @@ public class Driver {
                 case 1:
                     System.out.println("Ingrese el SKU del producto a agregar:  ");
                     int SKU = sc.nextInt();
+                    sc.nextLine();
+                    if (bstSKU.search(SKU) != null) {
+                        System.out.println("El SKU " + SKU + " ya existe en el inventario.");
+                        break;
+                    }
                     System.out.println("Ingrese el nombre del producto a agregar:  ");
                     String name = sc.nextLine();
                     System.out.println("Ingrese la descripción del producto a agregar:  ");
                     String desc = sc.nextLine();
-                    ArrayList<String> tallasArr = new ArrayList<>();
-                    ArrayList<Integer> cantidades = new ArrayList<>();
                     HashMap<String, Integer> tallas = new HashMap<>();
-                    System.out.println("Ingrese las tallas disponibles del producto (Ingrese un espacio para terminar):   ");
-                    while (true){
-                        if (!sc.nextLine().equals(" ")){
-                            tallasArr.add(sc.nextLine());
-                        }else{
+                    System.out.println("Ingrese las tallas disponibles del producto (una por línea, ingrese 'fin' para terminar):");
+                    while (true) {
+                        System.out.println("Ingrese la siguiente talla disponible para el producto: ");
+                        String talla = sc.nextLine().trim();
+                        if (talla.equalsIgnoreCase("fin")) {
                             break;
                         }
-                    }
-                    System.out.println("Ingrese las cantidades de producto disponibles para cada talla (en el mismo órden que ingresó las tallas) (Ingrese un espacio para terminar):   ");
-                    while (true){
-                        if (!sc.nextLine().equals(" ")){
-                            cantidades.add(Integer.parseInt(sc.nextLine()));
-                        }else{
-                            break;
+                        if (!talla.isEmpty()) {
+                            System.out.println("Ingrese la cantidad disponible para la talla " + talla + ": ");
+                            int cantidad = sc.nextInt();
+                            sc.nextLine();
+                            tallas.put(talla, cantidad);
                         }
-                    }
-                    for (int i = 0; i < tallasArr.size(); i++) {
-                        tallas.put(tallasArr.get(i), cantidades.get(i));
                     }
                     Producto producto = new Producto(SKU, name, desc, tallas);
                     bstSKU.insert(SKU, producto);
@@ -77,7 +75,7 @@ public class Driver {
                     productos.add(producto);
                     break;
                 case 2:
-                    System.out.println("Ingrese el SKU o el nombre del producto a editar: \nR/");
+                    System.out.println("Ingrese el SKU o el nombre del producto a editar: ");
                     String key = sc.nextLine();
                     Producto editar = null;
                     try{
@@ -173,6 +171,7 @@ public class Driver {
                     for (Producto p : productos){
                         System.out.println("SKU: " + p.getSKU() + "\n\t Nombre: " + p.getName() + "\n\tDescripción: " + p.getDesc() + "\n\tTallas: " + p.getTallas());
                     }
+                    break;
                 case 4:
                     System.out.println("Ingrese el SKU o el nombre del producto a buscar:  ");
                     Producto buscado = null;
@@ -209,6 +208,7 @@ public class Driver {
                     bstSKU.delete(eliminar.getSKU());
                     bstName.delete(eliminar.getName());
                     productos.remove(eliminar);
+                    System.out.println("El producto con SKU " + eliminar.getSKU() + " y nombre " + eliminar.getName() + " se ha eliminado exitosamente.");
                     break;
                 case 6:
                     loop = false;
