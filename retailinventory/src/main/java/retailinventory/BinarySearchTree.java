@@ -10,25 +10,28 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
     public void insert(K key, V value){
         if (this.root == null){
             this.root = new Node<K, V>(key, value);
+            return;
         }
         insert(key, value, this.root);
     }
 
     public void insert(K key, V value, Node<K, V> node){
-        if (key == node.getKey()) {
+        if (node.getKey().compareTo(key) == 0) {
             throw new RuntimeException("La clave ingresada ya está en el árbol.");
         }
     
         if (node.getKey().compareTo(key) > 0) {
             if (node.getRight() != null){
                 insert(key, value, node.getRight());
+            } else {
+                node.setRight(new Node<K, V>(key, value));
             }
-            node.setRight(new Node<K, V>(key, value));
         }else{
             if (node.getLeft() != null){
                 insert(key, value, node.getLeft());
+            } else {
+                node.setLeft(new Node<K, V>(key, value));
             }
-            node.setLeft(new Node<K, V>(key, value));
         }
     }
 
