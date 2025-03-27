@@ -100,4 +100,8 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
             }
         }
     }
+
+    public void setRoot(K key, V value) {
+        this.root = new Node<K, V>(key, value);
+    }
 }
