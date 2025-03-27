@@ -5,7 +5,7 @@ package retailinventory;
 
 import java.util.HashMap;
 
-public class Producto implements Comparable<Producto>{
+public class Producto{
     private int SKU;
     private String name;
     private String desc;
@@ -48,11 +48,6 @@ public class Producto implements Comparable<Producto>{
 
     public void setTallas(HashMap<String, Integer> tallas) {
         this.tallas = tallas;
-    }
-
-    @Override
-    public int compareTo(Producto producto) {
-        return (this.SKU > producto.getSKU()) ? 1 : ((this.SKU < producto.getSKU()) ? -1 : 0);
     }
 }
 
